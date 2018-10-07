@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="UTF-8">
+      <meta name="description" content="Maze Explorer">
+      <meta name="keywords" content="FirefoxOS,Maze,3D,WebGL">
+      <meta name="author" content="Kyle Harrity">
+      <style>
+         *{
+           padding : 0;
+           margin : 0;
+         }
+         /*****************************
+         *MENU STYLING
+         *****************************/
+         #options-container{
+            /*position : fixed*/
+            margin-left : auto;
+            margin-right : auto;
+            margin-top : 5%;
+            margin-bottom : 35%;
+            width : 80%; 
+         }
+         #menu-header{
+            /*margin-top : 15%;*/
+            left : auto;
+            right : auto;
+            width : 100%;
+            margin-left : auto;
+            margin-right : auto;
+            background-color : white;
+            background : rgba(255,255,255,0.6);
+         }
+         #title{
+            font-family : monospace;
+         }
+         #col-input-container, #row-input-container{
+            font-family : monospace;
+            font-size : 2rem;
+         }
+         #col-input-container button, #row-input-container button{
+            background-color : #f36;
+            height : 50px;
+            width  : 50px;
+            font-size : 2rem;
+         }
+         #rows, #cols{
+            height : 50px;
+            width  : 50px;
+            /*border : 1px solid black;*/
+            font-size : 2rem;
+         }
+         #updateRows-Cols{
+           font-family : monospace;
+           background-color : #f36;
+           color : white;
+         }
+         /************************************
+         *GAME STYLING
+         ************************************/
+         #game-container{
+            display : none;
+         }
+
+
+
+         canvas{
+            position : absolute;
+            top : 0;
+            left : 0;
+            margin-left : auto;
+            margin-right : auto;
+         }
+         .portrait-buttons{
+            float : left;
+            width : 50%;
+            padding-left : auto;
+            padding-right : auto;
+         }
+         #r_buttons_container{
+            margin-top : 80%;
+            margin-bottom : 50%;
+         }
+         #l_buttons_container{
+            margin-top : 50%;
+            margin-bottom : 50%;
+         }
+         #portrait_r_buttons_container{
+            margin-top : 80%;
+            margin-bottom : 50%;
+         }
+         #portrait_l_buttons_container{
+            margin-top : 50%;
+            margin-bottom : 50%;
+         }
+         /******************************
+         *FOOTER STYLING
+         ******************************/
+         #options-footer, #game-footer{
+            background-color : white;
+            background : rgba(255,255,255,0.8);
+            position : fixed;
+            left : 0px;
+            bottom : 0px;
+            height : 12%;
+            width : 100%;
+         }
+         #game-options-button, #cancel-options-button{
+            font-family : monospace;/*TODO*/
+            color : white;
+            background-color : #f36;
+         }
+         /************************************
+         *PORTRAIT STYLING
+         ************************************/
+         @media all and (orientation : portrait){
+         #left{
+            display : none;
+            
+            float : left;
+            width : 50%;
+              }
+         #mid{
+              position : relative;
+              margin-left : auto;
+              margin-right : auto;
+              width : 100%;
+              /*height : 50%;*/
+             }
+         #right{ 
+            float : left;
+            width : 50%;
+            display : none;
+               }
+         #portrait{
+            width : 100%;
+            margin-top : 50%;
+              margin-left : auto;
+              margin-right : auto;
+            /*background-color : #FF00FF;*/
+           }
+         .left_buttons{
+            width : 35%;
+           }
+         .right_buttons{
+            width : 35%;
+           }
+         #col-input-container, #row-input-container{
+            font-size : 1rem;
+         }
+         #col-input-container button, #row-input-container button{
+            font-size : 1rem;
+            height : 25px;
+            width  : 25px;
+         }
+         #rows, #cols{
+            font-size : 1rem;
+            height : 25px;
+            width  : 25px;
+         }
+         #updateRows-Cols{
+           font-size : 1rem;
+           height : 25px;
+           width  : 60px;
+         }
+         #title{font-size : 1rem;}
+         #game-options-button, #cancel-options-button{
+           font-size : 1rem;
+           height : 25px;
+           width  : 80px;
+         }
+         }
+         /***********************************
+         *LANDSCAPE STYLING
+         ***********************************/
+         @media all and (orientation : landscape){
+         #left{
+            float : left;
+            width : 20%;
+              }
+         #mid{
+              position : relative;
+              float : left;
+              width : 60%;
+             }
+         #right{
+            float : left;
+            width : 20%
+               }
+         #portrait{ display : none;}
+         #col-input-container, #row-input-container{
+            font-size : 2rem;
+         }
+         #col-input-container button, #row-input-container button{
+            font-size : 2rem;
+            height : 50px;
+            width  : 50px;
+         }
+         #rows, #cols{
+            font-size : 2rem;
+            height : 50px;
+            width  : 50px;
+         }
+         #updateRows-Cols{
+           font-size : 2rem;
+           height : 50px;
+           width  : 120px;
+         }
+         #title{font-size : 2rem;}
+         #game-options-button, #cancel-options-button{
+          font-size : 2rem;
+          height : 50px;
+          width : 160px;
+         }
+       }
+      </style>
+      <script src="Utils/KFH-Utilities.js"></script>
+      <script src="Game_Objects/MazeGameMobile.js"></script>
+      <script src="Game_Objects/Maze.js"></script>
+      <script src="Game_Objects/Cube.js"></script>
+      <script src="Game_Objects/MazePlayer.js"></script>
+      <script src="Game_Objects/MazeCell.js"></script>
+      <script src="Game_Objects/SkyBox.js"></script>
+      
+      <script src="Utils/Vector3.js"></script>
+      <script src="Utils/Camera.js"></script>
+      <!--<script src="Utils/cuon-utils.js"></script>-->
+      <script src="Game_Objects/SkyBox.js"></script>
+
+      <!--<script src="Texture2D.js"></script>-->
+   </head>
+   <body background="Textures/mazeTex-Patrick-Hoesley.jpg">
+      <div id="options-container">
+         <div id="menu-header">
+            <center>
+               <!--<span>Rows:</span><span id="rows">10</span><span id="row-inc">&#9650</span><span id="row-dec">&#9660</span><!--<input id="rows" type="number" value="10"></input>
+               <br>
+               <span>Cols:</span><!--<input id="cols" type="number" value="10"></input>-->
+               <h1 id="title">Maze Explorer</h1>
+               <br>
+               <div id="row-input-container">
+                  <span id="row-label">Rows:</span>
+                  <button id="row-dec-button">-</button>
+                  <span id="rows">10</span>
+                  <button id="row-inc-button">+</button>
+               </div>
+               <br>
+               <div id="col-input-container">
+                  <span id="col-label">Cols:</span>
+                  <button id="col-dec-button">-</button>
+                  <span id="cols">10</span>
+                  <button id="col-inc-button">+</button>
+               </div>
+               <br>
+               <!--<input id="walls" type="checkbox" value="Yes" style="z-index: 0">Walls?</input>-->
+               <!--TODO remove story mode once MazeGame.js is modified-->
+               <!--<input name="gameMode" id="storyMode" type="radio" value="Story" >Story Mode</input>-->
+               <input name="gameMode" id="zenMode" type="hidden" checked value="Zen"/>
+               <input name="gameMode" id="timeMode" type="hidden" value="Time"/>
+               
+               <!--TODO put in optional ad placement check box-->
+               <button id="updateRows-Cols">Begin</button>
+               
+            </center>
+         </div>
+         <div id="options-footer">
+            <center>
+               <button id="cancel-options-button">Cancel</button>
+            </center>
+         </div>
+      </div>
+      <div id="game-container">
+         <section id="left" ><br>
+            <center>
+               <div id="l_buttons_container">
+                  <img id="up_button_landscape" class="left_buttons" src="buttons/up_arrow_unpressed.png" width="40%" height="auto"></img>
+                  <br>
+                  <img id="down_button_landscape" class="left_buttons" src="buttons/down_arrow_unpressed.png" width="40%" height="auto"></img> 
+               </div>
+            </center>
+         </section>
+         <section id="mid" ><br>
+            <center>
+               <canvas id="canvas" width="1064" height="512" style="z-index : 1">no support :(</canvas>
+               <!--<canvas id="2dCanvas" width="1064" height="512"></canvas>-->
+            </center>
+         </section>
+         <section id="right" ><br>
+            <center>
+               <div id="r_buttons_container">
+                  <img id="left_button_landscape" class="right_buttons" src="buttons/left_arrow_unpressed.png" width="40%" height="auto"></img>
+                  <img id="right_button_landscape" class="right_buttons" src="buttons/right_arrow_unpressed.png" width="40%" height="auto"></img> 
+               </div>
+            </center>
+         </section>
+         <section id="portrait"><br>
+            <span class="portrait-buttons">
+               <center>
+                  <div id="portrait_l_buttons_container">
+                     <img id="up_button_portrait" class="left_buttons" src="buttons/up_arrow_unpressed.png" width="40%" height="auto"></img>
+                     <br>
+                     <img id="down_button_portrait" class="left_buttons" src="buttons/down_arrow_unpressed.png" width="40%" height="auto"></img>
+                  </div> 
+               </center>
+            </span>
+            <span class="portrait-buttons">
+               <center>
+                  <div id="portrait_r_buttons_container">
+                     <img id="left_button_portrait" class="right_buttons" src="buttons/left_arrow_unpressed.png" width="40%" height="auto"></img>
+                     <img id="right_button_portrait" class="right_buttons" src="buttons/right_arrow_unpressed.png" width="40%" height="auto"></img>  
+                  </div>
+               </center>
+            </span>           
+         </section>
+         <div id="game-footer">
+            <center>
+               <button id="game-options-button">Options</button>
+            </center>
+         </div>
+      </div> 
+       
+   </body>
+</html>
